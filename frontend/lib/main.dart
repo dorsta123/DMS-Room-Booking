@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
           title: const Text('Room Booking Home'),
         ),
         body: const Center(
-          child: Text('Flutter frontend running!'),
+          child: Text('Flutter froadsntend running!'),
         ),
       ),
     );
