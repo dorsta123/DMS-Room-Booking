@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 // Main widget for Room Booking
-class Room
+class Room    // this class encapsulating ui part and logic part
     extends
         StatefulWidget //  Stateful widget are used because the selected ui part will change at run time
         {
@@ -11,7 +11,8 @@ class Room
   State<Room> createState() => _RoomState();
 }
 
-class _RoomState extends State<Room> {
+class _RoomState extends State<Room>  
+{
   // List of ROOMS for booking
   final List<String> rooms = [
     'ROOM A01',
@@ -37,22 +38,22 @@ class _RoomState extends State<Room> {
         backgroundColor: const Color.fromRGBO(110, 99, 255, 1),
         centerTitle: true,
       ),
-      body: Column(
+      body: Column( // To Arrange Widgets Vertically
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //  Scrollable Rooms buttons in a row
-          SingleChildScrollView(
+          SingleChildScrollView( // it allows horizontal scrolling 
             scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10), // for giving padding
             child: Row(
               children:
                   rooms.map((room) {
                     return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),  // for giving padding
                       child: RoomButton(
                         label: room,
                         onTap: () {
-                          setState(() {
+                          setState(() {  // used for updating the ui part during runtime
                             selectedRoom = room;
                             _appointments = _getDataSource(room);
                           });
@@ -67,28 +68,29 @@ class _RoomState extends State<Room> {
           if (selectedRoom != null) ...[
             Padding(
               padding: const EdgeInsets.only(left: 8, bottom: 8),
-              child: Text(
+              child: Text( // show text 
                 'Selected: $selectedRoom',
                 style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
               ),
             ),
             Expanded(
-              child: SfCalendar(
+              child: SfCalendar(  // displays a visual booking calendar 
                 view: CalendarView.week,
-                allowedViews: const [
+                allowedViews: const [  // it supports multiple views like day,week & month
                   CalendarView.day,
                   CalendarView.week,
                   CalendarView.month,
                 ],
                 // minDate: DateTime.now(),
-                initialDisplayDate: DateTime.now(),
-                timeSlotViewSettings: const TimeSlotViewSettings(
+                initialDisplayDate: DateTime.now(), 
+                timeSlotViewSettings: const TimeSlotViewSettings(  // it enables calender timeslot setting
                   startHour: 7.5,
                   endHour: 23,
                   timeInterval: Duration(minutes: 30),
                   timeFormat: 'HH:mm',
                 ),
-                dataSource: MeetingDataSource(_appointments),
+                dataSource: MeetingDataSource(_appointments),  //This line connects your list of room bookings to the calendar
+
                 // On tap, to create a new appointment on the calendar
                 onTap: (CalendarTapDetails details) async {
                   // checking for already booked slot
@@ -101,6 +103,7 @@ class _RoomState extends State<Room> {
                     );
                     return;
                   }
+                  // book timeslot if slot if empty
                   if (details.targetElement == CalendarElement.calendarCell &&
                       details.date != null) {
                     final DateTime startTime = details.date!;
@@ -131,7 +134,7 @@ class _RoomState extends State<Room> {
                     bool? confirmed = await showDialog<bool>(
                       context: context,
                       builder:
-                          (context) => AlertDialog(
+                          (context) => AlertDialog(  // give a pop up
                             title: const Text('Book this slot?'),
                             content: Text(
                               'Room: $selectedRoom\n'
@@ -140,12 +143,12 @@ class _RoomState extends State<Room> {
                             ),
                             actions: [
                               TextButton(
-                                onPressed: () => Navigator.pop(context, false),
+                                onPressed: () => Navigator.pop(context, false), // Closes dialog and returns false (cancel)
                                 child: const Text('Cancel'),
                               ),
                               ElevatedButton(
-                                onPressed: () => Navigator.pop(context, true),
-                                child: const Text('Book'),
+                                onPressed: () => Navigator.pop(context, true),  //  Closes dialog and returns true
+                                child: const Text('Book'),  
                               ),
                             ],
                           ),
@@ -164,10 +167,10 @@ class _RoomState extends State<Room> {
                           );
                         });
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(  // it shows a temporary message at the bottom of the screen
                           const SnackBar(
                             content: Text('Time slot already booked'),
-                            showCloseIcon: true,
+                            showCloseIcon: true,  // it shows close icon for manually closing it
                           ),
                         );
                       }
@@ -189,7 +192,7 @@ class _RoomState extends State<Room> {
 
 //
 // Widget for room button
-class RoomButton extends StatelessWidget {
+class RoomButton extends StatelessWidget { // using statless widget because ui part is not changing during runtime
   final String label;
   final VoidCallback onTap;
 
@@ -197,15 +200,15 @@ class RoomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return GestureDetector( //gesture detector is used to detect gesture tap 
       onTap: onTap,
       child: Container(
-        width: 120,
+        width: 120, 
         height: 50,
-        alignment: Alignment.center,
+        alignment: Alignment.center,   // for the child widget's  alignment to center
         decoration: BoxDecoration(
           color: const Color.fromRGBO(110, 99, 255, 1),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(20),  // it gives box radius
         ),
         child: Text(
           label,
@@ -221,8 +224,9 @@ class RoomButton extends StatelessWidget {
 }
 
 // Data source class to supply appointments to the calendar
-class MeetingDataSource extends CalendarDataSource {
-  MeetingDataSource(List<Appointment> source) {
-    appointments = source;
+class MeetingDataSource extends CalendarDataSource { 
+  MeetingDataSource(List<Appointment> source) // accepts the  list of bookings
+   {
+    appointments = source; 	// Passes the booking data to the calendar widget
   }
 }
