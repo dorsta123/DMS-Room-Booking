@@ -29,7 +29,7 @@ class _RoomState extends State<Room> {
         )
         .toList();
   }
-
+// API function 
   void fetchUser() async {
     final url = Uri.parse('http://127.0.0.1:5008/slot/SL101');
     final response = await http.get(url);
@@ -56,6 +56,8 @@ class _RoomState extends State<Room> {
     'ROOM B02',
     'ROOM B03',
   ];
+
+  // dynamic color from api
   final Map<String, Color> colorNameMap = {
     "red": Colors.red,
     "green": Colors.green,
@@ -134,7 +136,7 @@ class _RoomState extends State<Room> {
                   padding: const EdgeInsets.only(right: 8, bottom: 15),
                   child: ElevatedButton(
                     onPressed:
-                        canSelectRooms()
+                        canSelectRooms() // for checking the slecting room is valid or not
                             ? () {
                               for (DateTime slot in selectedSlots) {
                                 final DateTime startTime = slot;
@@ -231,6 +233,7 @@ class _RoomState extends State<Room> {
     );
   }
 
+// function checking validity of a room
   bool canSelectRooms() {
     final now = DateTime.now();
     if (selectedSlots.isEmpty) {
