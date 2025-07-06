@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "973741989570",
+    "project_id": "room-book-appp",
+    "storage_bucket": "room-book-appp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:973741989570:android:f6d9dbf68ceb20f625a55b",
+        "android_client_info": {
+          "package_name": "com.example.frontend"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBn6yI19fZeZHO56Ewj3y7Q7LjkEy_QSbk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
